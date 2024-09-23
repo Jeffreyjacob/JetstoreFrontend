@@ -1,4 +1,4 @@
-import { AddressType, CartItemType, UserType } from "@/lib/type"
+import { AddressType, CartItemType, UserType, WishlistType } from "@/lib/type"
 import {createSlice,PayloadAction} from "@reduxjs/toolkit"
 
 
@@ -53,11 +53,26 @@ export const userSlice = createSlice({
              if(state.user){
                 state.user.cart = state.user.cart.filter((cart)=> cart.id !==action.payload.id)
              }
+         },
+         AddWishList:(state,action:PayloadAction<WishlistType>)=>{
+            if(state.user){
+               const findItem = state.user.wishlist.find((wishlist)=> wishlist.id === action.payload.id)
+               if(findItem){
+                 state.user.wishlist = state.user.wishlist.filter((wishlist)=> wishlist.id !== action.payload.id)
+               }else{
+                state.user.wishlist =  [...state.user.wishlist,action.payload]
+               }
+            }
+         },
+         RemoveWishlist:(state,action:PayloadAction<WishlistType>)=>{
+           if(state.user){
+            state.user.wishlist = state.user.wishlist.filter((wishlist)=>wishlist.id !== action.payload.id)
+           }
          }
     }
 })
 
 
 export const {AddUser,RemoveUser,AddNewAddress,RemoveAddress,
-  AddCart,ChangeQuantity,RemoveCart} = userSlice.actions;
+  AddCart,ChangeQuantity,RemoveCart,AddWishList,RemoveWishlist} = userSlice.actions;
 export default userSlice.reducer;

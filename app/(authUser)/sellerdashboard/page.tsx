@@ -7,10 +7,9 @@ import OrderTab from './(tabs)/OrderTab'
 import ProductTab from './(tabs)/ProductTab'
 import CreateProductTab from './(tabs)/CreateProductTab'
 import { useAppSelector } from '@/app/redux'
-import { useGetStore } from '@/api/StoreApi'
 
 const Page = () => {
-  const {getStore} = useGetStore()
+  const userInfo = useAppSelector((state)=>state.user.user)
     return (
         <div>
             <Header title='Seller Dashboard' />
@@ -23,7 +22,7 @@ const Page = () => {
                             <TabsTrigger value="order">Order</TabsTrigger>
                             <TabsTrigger value='product'>Product</TabsTrigger>
                            {
-                             getStore &&  <TabsTrigger value='createProduct'>Create Product</TabsTrigger>
+                             (userInfo?.store.length! > 0 ) &&  <TabsTrigger value='createProduct'>Create Product</TabsTrigger>
                            }
                         </TabsList>
                         <TabsContent value="store">

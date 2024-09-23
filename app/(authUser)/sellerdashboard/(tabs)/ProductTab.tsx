@@ -4,14 +4,14 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { ProductByUser, ProductType } from '@/lib/type';
-import { ArrowUpDown, Ellipsis, Loader } from 'lucide-react';
+import { ArrowUpDown, Box, Ellipsis, Loader } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { debounce } from "lodash"
 import Image from 'next/image';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import ProductAlert from '@/components/shared/ProductAlert';
 import PaginationSelector from '@/components/shared/Pagination/PaginationSelector';
 import { Skeleton } from '@/components/ui/skeleton';
+import DeleteAlert from '@/components/shared/DeleteAlert';
 
 
 export type SearchTermType = {
@@ -25,7 +25,7 @@ const ProductTab = () => {
     page: 1
   })
   const { getProductByuser, isLoading } = useGetProductByUserId(searchTerm)
-  const { deleteProduct } = useDeleteProduct()
+  const { deleteProduct, isPending } = useDeleteProduct()
   const [products, setProducts] = useState<ProductType[]>()
 
   useEffect(() => {
@@ -60,15 +60,24 @@ const ProductTab = () => {
     }))
   }
   return (
-    <div className='w-full py-10 lg:px-3'>
-      <Card className='w-full px-3 md:px-5 py-4'>
-        <div className='w-full flex justify-between items-center mb-3'>
+    <div className='w-full py-10 lg:px-3 h-full'>
+      <Card className='w-full px-3 md:px-5 py-4 h-full h-min-[100vh]'>
+        <div className='w-full flex justify-between items-center mb-3 h-full'>
           <h4 className='text-[18px] font-medium text-neutral-B900'>Products</h4>
-          <Input type='text' placeholder='search products'
+          { 
+            (products?.length! > 0) && <Input type='text' placeholder='search products'
             className='md:w-[200px] w-[150px]'
             onChange={(e) => handleSearchTerm(e.target.value)} />
+          }
         </div>
-        <Table>
+         {
+          products?.length === 0 ? <div className='w-full flex flex-col gap-4 justify-center items-center'>
+          <Box className='w-14 h-11 text-neutral-B600' />
+          <p className='text-neutral-B500 font-medium text-[14px]'>
+            You have not created any product yet.
+          </p>
+        </div> :
+          <Table>
           <TableCaption>
             <PaginationSelector page={getProductByuser?.currentpage || 1}
               onPageChange={handlePageChange} pages={getProductByuser?.totalPage || 1} />
@@ -99,35 +108,38 @@ const ProductTab = () => {
                   ))
                 }
               </> : <>
-                {
-                  products?.map((product) => (
-                    <TableRow key={product.id}>
-                      <TableCell className='text-left'>
-                        <Image src={product.images[0]} alt='product-image' width={35} height={35}
-                          className='rounded-lg shadow-md object-contain' />
-                      </TableCell>
-                      <TableCell className='bodyText w-fit min-w-[150px]'>{product.name}</TableCell>
-                      <TableCell className="bodyText min-w-[80px]">$ {product.price}</TableCell>
-                      <TableCell className="bodyText">{product.quantityAvaliable}</TableCell>
-                      <TableCell className="bodyText w-fit">{product.category}</TableCell>
-                      <TableCell className="bodyText text-right">
-                        <Popover>
-                          <PopoverTrigger>
-                            <Ellipsis className="w-5 h-5" />
-                          </PopoverTrigger>
-                          <PopoverContent className='w-fit'>
-                            <ProductAlert id={product.id.toString()} onDelete={handleDeleteProduct} />
-                          </PopoverContent>
-                        </Popover>
-                      </TableCell>
+                    {
+                      products?.map((product) => (
+                        <TableRow key={product.id}>
+                          <TableCell className='text-left'>
+                            <Image src={product.images[0]} alt='product-image' width={35} height={35}
+                              className='rounded-lg shadow-md object-contain' />
+                          </TableCell>
+                          <TableCell className='bodyText w-fit min-w-[150px]'>{product.name}</TableCell>
+                          <TableCell className="bodyText min-w-[80px]">$ {product.price}</TableCell>
+                          <TableCell className="bodyText">{product.quantityAvaliable}</TableCell>
+                          <TableCell className="bodyText w-fit">{product.category}</TableCell>
+                          <TableCell className="bodyText text-right">
+                            <Popover>
+                              <PopoverTrigger>
+                                <Ellipsis className="w-5 h-5" />
+                              </PopoverTrigger>
+                              <PopoverContent className='w-fit'>
+                                <DeleteAlert id={product.id.toString()}
+                                  onDelete={handleDeleteProduct} title='Product'
+                                  isDeleting={isPending} />
+                              </PopoverContent>
+                            </Popover>
+                          </TableCell>
 
-                    </TableRow>
-                  ))
-                }
+                        </TableRow>
+                      ))
+                    }
               </>
             }
           </TableBody>
         </Table>
+         }
       </Card>
 
     </div>

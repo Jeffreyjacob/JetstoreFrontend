@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { ArrowRight, ShoppingBag } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -37,15 +38,16 @@ const Page = () => {
                             </div>
                             <div className='flex flex-col gap-6'>
                                 {
-                                userInfo?.cart.length === 0 ? <div className='w-full h-[50vh] flex flex-col justify-center items-center transition-all duration-300 gap-3'>
-                                    <span>
-                                     No item in your cart  
-                                    </span>
-                                    <Button
-                                     onClick={()=>router.push("/searchproduct")}>
-                                     Start shopping
-                                    </Button>
-                                </div>:
+                                userInfo?.cart.length === 0 ?<div className='w-full flex flex-col gap-4 justify-center items-center min-h-[55vh]'>
+                                <ShoppingBag className='w-14 h-11 text-neutral-B600' />
+                                <p className='text-neutral-B500 font-medium text-[14px]'>
+                                  You have no item in your cart
+                                </p>
+                                <Button className='flex gap-3' onClick={()=>router.push("/search")}>
+                                  Start Shopping
+                                  <ArrowRight className='text-white w-4 h-4' />
+                                </Button>
+                              </div>:
                                 <>
                                 {
                                     userInfo?.cart.map((cart, index) => (

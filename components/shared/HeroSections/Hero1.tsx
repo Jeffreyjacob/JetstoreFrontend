@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { MoveRight } from "lucide-react"
-import HeroImage from '@/public/Mastercard.png';
+import HeroImage from '@/public/HeroImage.png';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const Hero = () => {
@@ -20,7 +20,7 @@ const Hero = () => {
          </div>
          <div className=" w-full md:w-1/2">
              <AspectRatio ratio={16 / 16} style={{
-                 backgroundImage: `url(${HeroImage})`,
+                 backgroundImage: `url(${HeroImage.src})`,
                  backgroundSize: "cover"
              }} className="relative">
                  <div className=" absolute inset-0 w-full flex flex-col justify-end pointer-events-none">

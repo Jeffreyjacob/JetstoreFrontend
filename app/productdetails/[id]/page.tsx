@@ -2,7 +2,7 @@
 import { useGetProductById, useGetProductReview, useRelatedProduct } from '@/api/ProductApi'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import { Skeleton } from '@/components/ui/skeleton'
-import { ChevronRight, Ellipsis, Heart, Star } from 'lucide-react'
+import { ChevronRight, Ellipsis, Heart, Loader2, Star } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import React, { ChangeEvent, useState } from 'react'
 import Autoplay from "embla-carousel-autoplay"
@@ -21,7 +21,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import SelectField from '@/components/shared/SelectButton/SelectField'
 import ProductCard from '@/components/shared/Product/ProductCard'
 import { useAddCart } from '@/api/CartApi'
-import { AddCart } from '@/state/userSlice'
+import { AddCart, AddWishList } from '@/state/userSlice'
+import { useAddWishlist } from '@/api/WishlistApi'
 
 const Page = () => {
     const { id } = useParams()
@@ -33,6 +34,8 @@ const Page = () => {
     const { getProductReview, reviewLoading } = useGetProductReview({ id: id as string, sortBy })
     const {relatedProduct,isLoading:isLoadingRelatedProduct} = useRelatedProduct(id as string)
     const {addCart,isPending} = useAddCart()
+    const {addWishlist,isPending:addingWishlist} = useAddWishlist()
+
     const plugin = React.useRef(
         Autoplay({ delay: 2000, stopOnInteraction: true })
     )
@@ -58,8 +61,16 @@ const Page = () => {
            console.log(error)
        }
     }
-    console.log(relatedProduct)
-
+    const handleAddWishList = async ()=>{
+        try{
+         const response = await addWishlist(parseInt(id.toString()))
+         dispatch(AddWishList(response.wishlist))
+         console.log(response)
+        }catch(error){
+            console.log(error)
+        }
+    }
+    
     return (
         <div className='flex flex-col justify-center items-center w-full'>
             <div className='w-full h-full max-w-5xl px-5 md:px-7 xl:px-3'>
@@ -159,9 +170,18 @@ const Page = () => {
                                                     }
                                                 </Button>
                                         }
-                                        <Button variant="outline" className='w-fi'>
-                                            <Heart className='w-4 h-4 text-neutral-B900' />
+                                        {isAuthenticated && 
+                                        <Button 
+                                        variant={userInfo?.wishlist.some((wishlist)=>wishlist.productId === parseInt(id.toString())) ? "default":"outline"}
+                                         className='w-fit' onClick={handleAddWishList}>
+                                            {
+                                                addingWishlist ? <Loader2 className={userInfo?.wishlist.some((wishlist)=>wishlist.productId === parseInt(id.toString())) ? "text-white w-4 h-4 animate-spin":"text-neutral-900 w-4 h-4 animate-spin"}/>: 
+                                                <Heart className={`w-4 h-4 ${
+                                                    userInfo?.wishlist.some((wishlist)=>wishlist.productId === parseInt(id.toString())) ? "text-white":"text-neutral-B900" 
+                                                }` }/>
+                                            }
                                         </Button>
+                                        }
                                     </div>
                                 </div>
 

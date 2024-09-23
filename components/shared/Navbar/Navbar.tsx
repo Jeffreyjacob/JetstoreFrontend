@@ -53,10 +53,8 @@ const Navbar = () => {
 
     fetchUser();
 }, [authUser, dispatch,router]);
-
-
-console.log(redirect)
-
+ 
+ console.log(authUser)
   useEffect(()=>{
      const handleScroll = ()=>{
           setisScroll(window.scrollY >10)
@@ -93,8 +91,8 @@ console.log(redirect)
           </div>
           <div className='flex gap-2 w-[173px] px-3 py-2 items-center border border-neutral-B100 rounded-xl'>
             <Search className='w-6 h-6 text-neutral-B300' />
-            <Input type='text' placeholder='Search Products'
-              className=' placeholder:text-neutral-B300 placeholder:text-[12px] border-none ring-0 shadow-none outline-none  ' />
+            <input type='text' placeholder='Search Products'
+              className=' placeholder:text-neutral-B300 placeholder:text-[12px] border-none ring-0 shadow-none outline-none  bg-transparent' onChange={()=>router.push("/searchproduct")} />
           </div>
         </div>
 
@@ -105,6 +103,7 @@ console.log(redirect)
           {
             isAuthenticated ? (
               <>
+                <Search className='w-6 h-6 text-neutral-B500 cursor-pointer lg:hidden' onClick={()=>router.push("/searchproduct")}/>
                  <ShoppingCart className='w-6 h-6 text-neutral-B500 cursor-pointer' onClick={()=>router.push("/cart")}/>
                 <div className='hidden lg:flex gap-8 items-center'>
                   <Dropdown />

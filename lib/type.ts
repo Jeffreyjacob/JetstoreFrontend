@@ -39,7 +39,8 @@ export type UserType = {
     updatedAt: string,
     address: AddressType[]
     store: StoreType[]
-    cart:CartItemType[]
+    cart: CartItemType[]
+    wishlist:WishlistType[]
 }
 
 export type StoreType = {
@@ -76,6 +77,7 @@ export type ProductType = {
     storeId: number
     userId: number
     reviews: ReviewType[]
+    store: StoreType
 }
 
 
@@ -97,5 +99,47 @@ export type CartItemType = {
     userId: number
 }
 
+export type OrderType = {
+    address: string
+    buyerId: number
+    buyer: UserType
+    createdAt: string
+    id: number
+    netAmount: number
+    status: string
+    updatedAt: string
+}
 
+export type SellerOrderType = {
+    Order: OrderType
+    ProductOwner: number
+    createdAt: string
+    id: number
+    orderId: number
+    product: ProductType
+    productId: number
+    quantity: number
+    updatedAt: string
+}
+
+export type BuyerOrderType = {
+    Order: OrderType
+    ProductOwner: number
+    createdAt: string
+    id: number
+    orderId: number
+    product: ProductType
+    productId: number
+    quantity: number
+    updatedAt: string
+}
+
+export type WishlistType = {
+    createdAt: string
+    id: number
+    product: ProductType
+    productId: number
+    updatedAt: string
+    userId: number
+}
 

@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { API_BASE_URL } from "./AuthApi"
 import { toast } from "sonner"
 import { AddressInputType } from "@/components/shared/forms/AddressForm"
+import { UserType } from "@/lib/type"
 
 
 export const useAuthUser = ()=>{

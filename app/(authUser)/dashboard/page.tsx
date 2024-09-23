@@ -17,7 +17,6 @@ const Page = () => {
                     <TabsTrigger value="userInfo">Account</TabsTrigger>
                     <TabsTrigger value="Order">Order</TabsTrigger>
                     <TabsTrigger value='wishlist'>WishList</TabsTrigger>
-                    <TabsTrigger value='message'>Message</TabsTrigger>
                 </TabsList>
                 <TabsContent value="userInfo">
                     <AccountInfo/>
@@ -25,11 +24,8 @@ const Page = () => {
                 <TabsContent value="Order">
                     <Order/>
                 </TabsContent>
-                <TabsContent value="wishList">
+                <TabsContent value="wishlist">
                     <WishList/>
-                </TabsContent>
-                <TabsContent value="message">
-                    
                 </TabsContent>
             </Tabs>
         </div>
