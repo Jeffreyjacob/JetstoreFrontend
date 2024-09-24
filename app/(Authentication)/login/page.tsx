@@ -14,6 +14,7 @@ import { useLogin } from '@/api/AuthApi';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppDispatch } from '@/app/redux';
 import { AddUser} from '@/state/userSlice';
+import {useCookies} from "react-cookie"
 
 const formSchema = z.object({
     email: z.string().email("email is invalid").min(1, "email is required"),
@@ -25,6 +26,7 @@ const Page = () => {
     const {login,isPending} = useLogin();
     const searchParams = useSearchParams()
     const dispatch = useAppDispatch()
+    const [cookie,setCookie] = useCookies()
     const redirect = (searchParams.get("redirect") === "/login" && "/" ) ||
     (searchParams.get("redirect") === "/signup"  && "/" )
      || searchParams.get("redirect") || "/"  as string
@@ -42,7 +44,9 @@ const Page = () => {
             email:values.email,
             password:values.password
          })
+         setCookie("token",{token:response.token})
          form.reset()
+
          dispatch(AddUser(response))
          router.push(redirect)
        }catch(error){
