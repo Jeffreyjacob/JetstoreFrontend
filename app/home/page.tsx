@@ -59,7 +59,7 @@ const HomePage = () => {
           </h3>
         </div>
 
-        <div className="flex justify-center items-center w-full py-10 mb-16">
+        <div className="flex  justify-center items-center w-full py-10 mb-16">
           {
             fetchingProduct ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
