@@ -21,6 +21,8 @@ const formSchema = z.object({
     password: z.string().min(6, "Password must be at least 6 characters")
 })
 
+const isSecure = process.env.NEXT_PUBLIC_API_SECURE == "true"
+
 const Page = () => {
     const router = useRouter()
     const {login,isPending} = useLogin();
@@ -44,7 +46,12 @@ const Page = () => {
             email:values.email,
             password:values.password
          })
-         setCookie("token",{token:response.token})
+         setCookie("token",{token:response.token},{
+            path: '/',
+            httpOnly: true,
+            secure:isSecure,
+            sameSite:'none'
+         })
          form.reset()
 
          dispatch(AddUser(response))
