@@ -54,6 +54,7 @@ const Page = () => {
           setCookie("token",{token:response.token})
           form.reset()
           dispatch(AddUser(response))
+          localStorage.setItem('token',response.token)
           router.push(redirect)
         }catch(error){
             console.log(error)
