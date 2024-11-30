@@ -46,9 +46,12 @@ const Page = () => {
             email:values.email,
             password:values.password
          })
+         console.log(response)
          form.reset()
 
          dispatch(AddUser(response))
+         localStorage.setItem('token',response.token)
+         
          router.push(redirect)
        }catch(error){
         console.log(error)

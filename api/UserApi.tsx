@@ -4,12 +4,17 @@ import { toast } from "sonner"
 import { AddressInputType } from "@/components/shared/forms/AddressForm"
 import { UserType } from "@/lib/type"
 
+const token = localStorage.getItem('token')
+
 
 export const useAuthUser = ()=>{
     const AuthUser = async ()=>{
         const res = await fetch(`${API_BASE_URL}/api/user/authUser`,{
             method:"GET",
-            credentials:"include"
+            credentials:"include",
+            headers:{
+                "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()
@@ -32,7 +37,10 @@ export const useUpdateUserInfo = ()=>{
         const res = await fetch(`${API_BASE_URL}/api/user/updateUserProfile`,{
             method:"PUT",
             credentials:"include",
-            body:updateUserInput
+            body:updateUserInput,
+            headers:{
+                "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()
@@ -60,10 +68,11 @@ export const useAddaddress = ()=>{
         const res = await fetch(`${API_BASE_URL}/api/user/addAddress`,{
             method:"POST",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${token}`
             },
             credentials:"include",
-            body:JSON.stringify(addressInput)
+            body:JSON.stringify(addressInput),
         })
 
         const data = await res.json()
@@ -90,7 +99,10 @@ export const useRemoveAddress = ()=>{
     const RemoveAddress = async (id:string)=>{
         const res = await fetch(`${API_BASE_URL}/api/user/removeAddress/${id}`,{
             method:"DELETE",
-            credentials:"include"
+            credentials:"include",
+            headers:{
+                "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()

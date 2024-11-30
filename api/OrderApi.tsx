@@ -19,13 +19,16 @@ type ChangeStatusType = {
     status:string
 }
 
+const token = localStorage.getItem('token')
+
 export const useCreateCheckout = ()=>{
     const CreateCheckout = async (OrderInput:OrderInput)=>{
         const res = await fetch(`${API_BASE_URL}/api/order/createCheckout`,{
             method:"POST",
             credentials:"include",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                 "Authorization": `Bearer ${token}`
             },
             body:JSON.stringify(OrderInput)
         })
@@ -55,7 +58,10 @@ export const useGetSellerOrder = (page:number)=>{
     const GetSellerOrder = async ():Promise<SellerOrderResponse> =>{
         const res = await fetch(`${API_BASE_URL}/api/order/sellerOrder?${params.toString()}`,{
             method:"GET",
-            credentials:"include"
+            credentials:"include",
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()
@@ -77,7 +83,10 @@ export const useGetBuyerOrder = ()=>{
      const GetBuyerOrder = async ():Promise<{order:BuyerOrderType[]}>=>{
         const res = await fetch(`${API_BASE_URL}/api/order/buyerOrder`,{
             method:"GET",
-            credentials:"include"
+            credentials:"include",
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()
@@ -100,7 +109,8 @@ export const useChangeOrderStatus = ()=>{
         const res = await fetch(`${API_BASE_URL}/api/order/changeOrderStatus/${ChangeStatusInput.id}`,{
             method:"PUT",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                 "Authorization": `Bearer ${token}`
             },
             credentials:"include",
             body:JSON.stringify({status:ChangeStatusInput.status})
@@ -131,7 +141,10 @@ export const useDeleteOrder = ()=>{
     const DeleteOrder = async (id:string)=>{
         const res = await fetch(`${API_BASE_URL}/api/order/deleteOrder/${id}`,{
             method:"DELETE",
-            credentials:"include"
+            credentials:"include",
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()

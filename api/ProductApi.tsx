@@ -18,13 +18,18 @@ type SearchResponse = {
     totalPage:number
 }
 
+const token = localStorage.getItem('token')
+
 export const useCreateProduct = () => {
     const queryClient = useQueryClient()
     const CreateProduct = async (productInput: FormData) => {
         const res = await fetch(`${API_BASE_URL}/api/product/createProduct`, {
             method: "POST",
             credentials: "include",
-            body: productInput
+            body: productInput,
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()
@@ -57,7 +62,10 @@ export const useGetProductByUserId = (searchTerm: SearchTermType) => {
     const GetProductByUser = async (): Promise<ProductByUser> => {
         const res = await fetch(`${API_BASE_URL}/api/product/getProductbyUserId?${params.toString()}`, {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()
@@ -81,7 +89,10 @@ export const useDeleteProduct = () => {
     const DeleteProduct = async (id: string) => {
         const res = await fetch(`${API_BASE_URL}/api/product/deleteProduct/${id}`, {
             method: "DELETE",
-            credentials: "include"
+            credentials: "include",
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()
@@ -153,7 +164,10 @@ export const useGetProductReview = ({ id, sortBy }: { id: string, sortBy: string
     const GetProductReview = async (): Promise<{ review: ReviewType[] }> => {
         const res = await fetch(`${API_BASE_URL}/api/product/getProductReview/${id}?${params.toString()}`, {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()
@@ -177,7 +191,8 @@ export const useAddReview = (id: string) => {
         const res = await fetch(`${API_BASE_URL}/api/product/addReview/${id}`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                 "Authorization": `Bearer ${token}`
             },
             credentials: "include",
             body: JSON.stringify({ reviewText })
@@ -209,7 +224,10 @@ export const useDeleteProductReview = () => {
     const DeleteProductReview = async (id: string) => {
         const res = await fetch(`${API_BASE_URL}/api/product/removeReview/${id}`, {
             method: "DELETE",
-            credentials: "include"
+            credentials: "include",
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()

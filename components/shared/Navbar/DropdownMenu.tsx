@@ -17,6 +17,7 @@ const Dropdown = () => {
          try{
            await logOut()
            dispatch(RemoveUser())
+           localStorage.removeItem('token')
            router.push("/")
          }catch(error){
             console.log(error)

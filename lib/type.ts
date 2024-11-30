@@ -41,6 +41,7 @@ export type UserType = {
     store: StoreType[]
     cart: CartItemType[]
     wishlist:WishlistType[]
+    token:string
 }
 
 export type StoreType = {

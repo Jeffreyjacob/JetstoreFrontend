@@ -4,12 +4,12 @@ import {createSlice,PayloadAction} from "@reduxjs/toolkit"
 
 interface initialStateType {
     user:UserType | null,
-    isAuthenticated:boolean
+    isAuthenticated:boolean,
 }
 
 const initialState:initialStateType = {
     user:null,
-    isAuthenticated:false
+    isAuthenticated:false,
 }
 
 

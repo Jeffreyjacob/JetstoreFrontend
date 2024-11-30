@@ -10,13 +10,16 @@ type CartInput = {
     selectedColor:string
 }
 
+const token = localStorage.getItem('token')
+
 export const useAddCart = ()=>{
     const AddCart = async (cartInput:CartInput)=>{
         const res = await fetch(`${API_BASE_URL}/api/cart/addCart`,{
             method:"POST",
             credentials:"include",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                 "Authorization": `Bearer ${token}`
             },
             body:JSON.stringify(cartInput)
         })
@@ -47,7 +50,8 @@ export const useChangeQuantity = ()=>{
             method:"PUT",
             credentials:"include",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                 "Authorization": `Bearer ${token}`
             },
             body:JSON.stringify({quantity})
         })
@@ -71,6 +75,9 @@ export const useRemoveCart =  ()=>{
         const res = await fetch(`${API_BASE_URL}/api/cart/deleteCart/${id}`,{
             method:"DELETE",
             credentials:"include",
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()

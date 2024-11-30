@@ -28,6 +28,7 @@ const ToggleMenu = () => {
          try{
            await logOut()
            dispatch(RemoveUser())
+           localStorage.removeItem('token')
            setOpen(false)
            router.push("/")
          }catch(error){

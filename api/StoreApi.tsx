@@ -4,13 +4,18 @@ import { toast } from "sonner"
 import { StoreType } from "@/lib/type"
 
 
+const token = localStorage.getItem('token')
+
 export const useCreateStore = () => {
     const queryClient = useQueryClient()
     const CreateStore = async (storeInput: FormData) => {
         const res = await fetch(`${API_BASE_URL}/api/store/createStore`, {
             method: "POST",
             credentials: "include",
-            body: storeInput
+            body: storeInput,
+            headers:{
+                "Authorization": `Bearer ${token}` 
+            }
         })
         const data = await res.json()
         if (!res.ok) {
@@ -38,8 +43,11 @@ export const useCreateStore = () => {
 export const useGetStore = ()=>{
     const GetStore = async () =>{
         const res = await fetch(`${API_BASE_URL}/api/store/getStore`,{
-            method:"GET",
-            credentials:"include"
+             method:"GET",
+             credentials:"include",
+             headers:{
+                 "Authorization": `Bearer ${token}`
+             }
         })
 
         const data = await res.json()
@@ -63,7 +71,10 @@ export const useEditStore = (id:string)=>{
         const res =  await fetch(`${API_BASE_URL}/api/store/editStore/${id}`,{
             method:"PUT",
             credentials:"include",
-            body:storeInput
+            body:storeInput,
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()

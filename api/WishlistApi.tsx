@@ -3,13 +3,16 @@ import { API_BASE_URL } from "./AuthApi"
 import { toast } from "sonner"
 
 
+const token = localStorage.getItem('token')
+
 export const useAddWishlist = ()=>{
     const AddWishlist = async (productId:number)=>{
         const res = await fetch(`${API_BASE_URL}/api/wishlist/addWishlit`,{
             method:"POST",
             credentials:"include",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                 "Authorization": `Bearer ${token}`
             },
             body:JSON.stringify({productId})
         })
@@ -37,7 +40,10 @@ export const useRemoveWishlist = ()=>{
     const RemoveWishList = async (id:string)=>{
         const res = await fetch(`${API_BASE_URL}/api/wishlist/removeWishlist/${id}`,{
             method:"DELETE",
-            credentials:"include"
+            credentials:"include",
+            headers:{
+                 "Authorization": `Bearer ${token}`
+            }
         })
 
         const data = await res.json()
