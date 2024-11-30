@@ -4,9 +4,10 @@ import { toast } from "sonner"
 import { StoreType } from "@/lib/type"
 
 
-const token = localStorage.getItem('token')
+
 
 export const useCreateStore = () => {
+    const token = localStorage.getItem('token')
     const queryClient = useQueryClient()
     const CreateStore = async (storeInput: FormData) => {
         const res = await fetch(`${API_BASE_URL}/api/store/createStore`, {
@@ -41,6 +42,7 @@ export const useCreateStore = () => {
 }
 
 export const useGetStore = ()=>{
+    const token = localStorage.getItem('token')
     const GetStore = async () =>{
         const res = await fetch(`${API_BASE_URL}/api/store/getStore`,{
              method:"GET",
@@ -66,6 +68,7 @@ export const useGetStore = ()=>{
 }
 
 export const useEditStore = (id:string)=>{
+    const token = localStorage.getItem('token')
     const queryClient = useQueryClient()
     const EditStore = async(storeInput:FormData)=>{
         const res =  await fetch(`${API_BASE_URL}/api/store/editStore/${id}`,{

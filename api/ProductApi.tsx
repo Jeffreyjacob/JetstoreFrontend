@@ -18,9 +18,9 @@ type SearchResponse = {
     totalPage:number
 }
 
-const token = localStorage.getItem('token')
 
 export const useCreateProduct = () => {
+    const token = localStorage.getItem('token')
     const queryClient = useQueryClient()
     const CreateProduct = async (productInput: FormData) => {
         const res = await fetch(`${API_BASE_URL}/api/product/createProduct`, {
@@ -56,6 +56,7 @@ export const useCreateProduct = () => {
 
 
 export const useGetProductByUserId = (searchTerm: SearchTermType) => {
+    const token = localStorage.getItem('token')
     const params = new URLSearchParams();
     params.set("search", searchTerm.search)
     params.set("page", searchTerm.page.toString())
@@ -85,6 +86,7 @@ export const useGetProductByUserId = (searchTerm: SearchTermType) => {
 }
 
 export const useDeleteProduct = () => {
+    const token = localStorage.getItem('token')
     const queryClient = useQueryClient()
     const DeleteProduct = async (id: string) => {
         const res = await fetch(`${API_BASE_URL}/api/product/deleteProduct/${id}`, {
@@ -159,6 +161,7 @@ export const useGetProductById = (id: string) => {
 }
 
 export const useGetProductReview = ({ id, sortBy }: { id: string, sortBy: string }) => {
+    const token = localStorage.getItem('token')
     const params = new URLSearchParams()
     params.set("sortBy", sortBy)
     const GetProductReview = async (): Promise<{ review: ReviewType[] }> => {
@@ -186,6 +189,7 @@ export const useGetProductReview = ({ id, sortBy }: { id: string, sortBy: string
 }
 
 export const useAddReview = (id: string) => {
+    const token = localStorage.getItem('token')
     const queryClient = useQueryClient()
     const AddReview = async ({ reviewText }: { reviewText: string }) => {
         const res = await fetch(`${API_BASE_URL}/api/product/addReview/${id}`, {
@@ -220,6 +224,7 @@ export const useAddReview = (id: string) => {
 }
 
 export const useDeleteProductReview = () => {
+    const token = localStorage.getItem('token')
     const queryClient = useQueryClient()
     const DeleteProductReview = async (id: string) => {
         const res = await fetch(`${API_BASE_URL}/api/product/removeReview/${id}`, {

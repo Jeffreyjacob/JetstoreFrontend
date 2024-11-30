@@ -19,9 +19,10 @@ type ChangeStatusType = {
     status:string
 }
 
-const token = localStorage.getItem('token')
+
 
 export const useCreateCheckout = ()=>{
+    const token = localStorage.getItem('token')
     const CreateCheckout = async (OrderInput:OrderInput)=>{
         const res = await fetch(`${API_BASE_URL}/api/order/createCheckout`,{
             method:"POST",
@@ -53,6 +54,7 @@ export const useCreateCheckout = ()=>{
 }
 
 export const useGetSellerOrder = (page:number)=>{
+    const token = localStorage.getItem('token')
     const params = new URLSearchParams()
     params.set("page",page.toString())
     const GetSellerOrder = async ():Promise<SellerOrderResponse> =>{
@@ -80,6 +82,7 @@ export const useGetSellerOrder = (page:number)=>{
 }
 
 export const useGetBuyerOrder = ()=>{
+    const token = localStorage.getItem('token')
      const GetBuyerOrder = async ():Promise<{order:BuyerOrderType[]}>=>{
         const res = await fetch(`${API_BASE_URL}/api/order/buyerOrder`,{
             method:"GET",
@@ -105,6 +108,7 @@ export const useGetBuyerOrder = ()=>{
 }
 
 export const useChangeOrderStatus = ()=>{
+    const token = localStorage.getItem('token')
     const ChangeOrderStatus = async (ChangeStatusInput:ChangeStatusType)=>{
         const res = await fetch(`${API_BASE_URL}/api/order/changeOrderStatus/${ChangeStatusInput.id}`,{
             method:"PUT",
@@ -137,6 +141,7 @@ export const useChangeOrderStatus = ()=>{
 }
 
 export const useDeleteOrder = ()=>{
+    const token = localStorage.getItem('token')
     const queryClient = useQueryClient()
     const DeleteOrder = async (id:string)=>{
         const res = await fetch(`${API_BASE_URL}/api/order/deleteOrder/${id}`,{
