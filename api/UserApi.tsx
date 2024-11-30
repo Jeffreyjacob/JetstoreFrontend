@@ -4,10 +4,11 @@ import { toast } from "sonner"
 import { AddressInputType } from "@/components/shared/forms/AddressForm"
 import { UserType } from "@/lib/type"
 
-const token = localStorage.getItem('token')
+
 
 
 export const useAuthUser = ()=>{
+    const token = localStorage.getItem('token')
     const AuthUser = async ()=>{
         const res = await fetch(`${API_BASE_URL}/api/user/authUser`,{
             method:"GET",
@@ -26,13 +27,14 @@ export const useAuthUser = ()=>{
 
     const {data:authUser,isLoading,refetch,isRefetching} = useQuery({
         queryKey:["getAuthUser"],
-        queryFn:AuthUser
+        queryFn:AuthUser,
     })
 
     return {authUser,isLoading,refetch,isRefetching}
 }
 
 export const useUpdateUserInfo = ()=>{
+    const token = localStorage.getItem('token')
     const UpdateUserInfo = async (updateUserInput:FormData)=>{
         const res = await fetch(`${API_BASE_URL}/api/user/updateUserProfile`,{
             method:"PUT",
@@ -64,6 +66,7 @@ export const useUpdateUserInfo = ()=>{
 }
 
 export const useAddaddress = ()=>{
+    const token = localStorage.getItem('token')
     const AddAddress = async (addressInput:AddressInputType)=>{
         const res = await fetch(`${API_BASE_URL}/api/user/addAddress`,{
             method:"POST",
@@ -96,6 +99,7 @@ export const useAddaddress = ()=>{
 }
 
 export const useRemoveAddress = ()=>{
+    const token = localStorage.getItem('token')
     const RemoveAddress = async (id:string)=>{
         const res = await fetch(`${API_BASE_URL}/api/user/removeAddress/${id}`,{
             method:"DELETE",

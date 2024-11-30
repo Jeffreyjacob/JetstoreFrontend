@@ -24,6 +24,7 @@ export const userSlice = createSlice({
          RemoveUser:(state)=>{
             state.user = null,
             state.isAuthenticated = false
+            
          },
          AddNewAddress:(state,actions:PayloadAction<AddressType>)=>{
            if(state.user){
