@@ -46,12 +46,6 @@ const Page = () => {
             email:values.email,
             password:values.password
          })
-         setCookie("token",{token:response.token},{
-            path: '/',
-            httpOnly: true,
-            secure:isSecure,
-            sameSite:'none'
-         })
          form.reset()
 
          dispatch(AddUser(response))
